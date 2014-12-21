@@ -1,6 +1,12 @@
 # ToWords
 
-TODO: Write a gem description
+This Gem converts numbers into words.
+
+e.g.
+
+1.to_words    # one
+100.to_words  # one hundred
+101.to_words  # one hundred and 1
 
 ## Installation
 

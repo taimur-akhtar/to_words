@@ -10,7 +10,7 @@ Gem::Specification.new do |spec|
   spec.email         = ["taimur.akhtar@square63.com"]
   spec.summary       = %q{This would convert numbers into words.}
   spec.description   = %q{This gem would convert a number into its equivalent words(english).}
-  spec.homepage      = ""
+  spec.homepage      = "https://github.com/taimur-akhtar/to_words"
   spec.license       = "MIT"
 
   spec.files         = `git ls-files -z`.split("\x0")

@@ -7,7 +7,8 @@ module ToWords
 
   def to_words
     num = self.to_i
-    return UNDER_HUNDRED[num] if num <= 100
+    num, sign = check_sign(num)
+    return (sign + UNDER_HUNDRED[num]) if num <= 100
     counter = 0
     result = []
     while num != 0
@@ -16,7 +17,7 @@ module ToWords
       result << temp_result + " " + DIVISIONS[counter] + " " if temp_result != ''
       counter += 1
     end
-    return result.reverse.join(", ").rstrip
+    return sign + result.reverse.join(", ").rstrip
   end
 
   def result_below_one_thousand(num, counter)
@@ -26,6 +27,10 @@ module ToWords
     return UNDER_HUNDRED[remaining]                                            if hundred == 0 && remaining != 0
     return UNDER_HUNDRED[hundred] + " Hundred "                                if hundred != 0 && remaining == 0
     return ''
+  end
+
+  def check_sign(num)
+    return num < 0 ? ([num.abs, 'negative ']) : ([num, ''])
   end
 end
 

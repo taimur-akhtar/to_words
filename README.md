@@ -8,7 +8,7 @@ e.g.
 
 100.to_words  # one hundred , 
 
-101.to_words  # one hundred and 1
+101.to_words  # one hundred and one
 
 ## Installation
 

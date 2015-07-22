@@ -2,13 +2,16 @@ require "to_words/version"
 
 module ToWords
 
-  UNDER_HUNDRED = {""=>"", 0=>"zero", 1=>"one", 2=>"two", 3=>"three", 4=>"four", 5=>"five", 6=>"six", 7=>"seven", 8=>"eight", 9=>"nine", 10=>"ten", 11=>"eleven", 12=>"twelve", 13=>"thirteen", 14=>"fourteen", 15=>"fifteen", 16=>"sixteen", 17=>"seventeen", 18=>"eighteen", 19=>"nineteen", 20=>"twenty", 21=>"twenty one", 22=>"twenty two", 23=>"twenty three", 24=>"twenty four", 25=>"twenty five", 26=>"twenty six", 27=>"twenty seven", 28=>"twenty eight", 29=>"twenty nine", 30=>"thirty", 31=>"thirty one", 32=>"thirty two", 33=>"thirty three", 34=>"thirty four", 35=>"thirty five", 36=>"thirty six", 37=>"thirty seven", 38=>"thirty eight", 39=>"thirty nine", 40=>"forty", 41=>"forty one", 42=>"forty two", 43=>"forty three", 44=>"forty four", 45=>"forty five", 46=>"forty six", 47=>"forty seven", 48=>"forty eight", 49=>"forty nine", 50=>"fifty", 51=>"fifty one", 52=>"fifty two", 53=>"fifty three", 54=>"fifty four", 55=>"fifty five", 56=>"fifty six", 57=>"fifty seven", 58=>"fifty eight", 59=>"fifty nine", 60=>"sixty", 61=>"sixty one", 62=>"sixty two", 63=>"sixty three", 64=>"sixty four", 65=>"sixty five", 66=>"sixty six", 67=>"sixty seven", 68=>"sixty eight", 69=>"sixty nine", 70=>"seventy", 71=>"seventy one", 72=>"seventy two", 73=>"seventy three", 74=>"seventy four", 75=>"seventy five", 76=>"seventy six", 77=>"seventy seven", 78=>"seventy eight", 79=>"seventy nine", 80=>"eighty", 81=>"eighty one", 82=>"eighty two", 83=>"eighty three", 84=>"eighty four", 85=>"eighty five", 86=>"eighty six", 87=>"eighty seven", 88=>"eighty eight", 89=>"eighty nine", 90=>"ninety", 91=>"ninety one", 92=>"ninety two", 93=>"ninety three", 94=>"ninety four", 95=>"ninety five", 96=>"ninety six", 97=>"ninety seven", 98=>"ninety eight", 99=>"ninety nine", 100=>"one hundred"}
-  DIVISIONS = ["", "Thousand", "Million", "Billion", "Trillion", "Quadrillion", "Quintrillion"]
+  UNDER_HUNDRED = {""=>"", 0=>"nol", 1=>"satu", 2=>"dua", 3=>"tiga", 4=>"empat", 5=>"lima", 6=>"enam", 7=>"tujuh", 8=>"delapan", 9=>"sembilan", 10=>"sepuluh", 11=>"sebelas", 12=>"dua belas", 13=>"tiga belas", 14=>"empat belas", 15=>"lima belas", 16=>"enam belas", 17=>"tujuh belas", 18=>"delapan belas", 19=>"sembilan belas", 20=>"dua puluh", 21=>"dua puluh satu", 22=>"dua puluh dua", 23=>"dua puluh tiga", 24=>"dua puluh empat", 25=>"dua puluh lima", 26=>"dua puluh enam", 27=>"dua puluh tujuh", 28=>"dua puluh delapan", 29=>"dua puluh sembilan", 30=>"tiga puluh", 31=>"tiga puluh satu", 32=>"tiga puluh dua", 33=>"tiga puluh tiga", 34=>"thirty four", 35=>"thirty five", 36=>"thirty six", 37=>"thirty seven", 38=>"thirty eight", 39=>"thirty nine", 40=>"forty", 41=>"forty one", 42=>"forty two", 43=>"forty three", 44=>"forty four", 45=>"forty five", 46=>"forty six", 47=>"forty seven", 48=>"forty eight", 49=>"forty nine", 50=>"fifty", 51=>"fifty one", 52=>"fifty two", 53=>"fifty three", 54=>"fifty four", 55=>"fifty five", 56=>"fifty six", 57=>"fifty seven", 58=>"fifty eight", 59=>"fifty nine", 60=>"sixty", 61=>"sixty one", 62=>"sixty two", 63=>"sixty three", 64=>"sixty four", 65=>"sixty five", 66=>"sixty six", 67=>"sixty seven", 68=>"sixty eight", 69=>"sixty nine", 70=>"seventy", 71=>"seventy one", 72=>"seventy two", 73=>"seventy three", 74=>"seventy four", 75=>"seventy five", 76=>"seventy six", 77=>"seventy seven", 78=>"seventy eight", 79=>"seventy nine", 80=>"eighty", 81=>"eighty one", 82=>"eighty two", 83=>"eighty three", 84=>"eighty four", 85=>"eighty five", 86=>"eighty six", 87=>"eighty seven", 88=>"eighty eight", 89=>"eighty nine", 90=>"ninety", 91=>"ninety one", 92=>"ninety two", 93=>"ninety three", 94=>"ninety four", 95=>"ninety five", 96=>"ninety six", 97=>"ninety seven", 98=>"ninety eight", 99=>"ninety nine", 100=>"seratus"}
+
+  UNDER_HUNDRED = {""=>"", 0=>"nol", 1=>"satu", 2=>"dua", 3=>"tiga", 4=>"empat", 5=>"lima", 6=>"enam", 7=>"tujuh", 8=>"delapan", 9=>"sembilan", 10=>"sepuluh", 11=>"sebelas", 12=>"dua belas", 13=>"tiga belas", 14=>"empat belas", 15=>"lima belas", 16=>"enam belas", 17=>"tujuh belas", 18=>"delapan belas", 19=>"sembilan belas", 20=>"dua puluh", 30=>"tiga puluh", 40=>"empat puluh", 50=>"lima puluh", 60=>"enam puluh", 70=>"tujuh puluh", 80=>"delapan puluh", 90=>"sembilan puluh", 100=>"seratus"}
+
+  DIVISIONS = ["", "ribu", "juta", "miliar", "Trillion", "Quadrillion", "Quintrillion"]
 
   def to_words
     num = self.to_i
     num, sign = check_sign(num)
-    return (sign + UNDER_HUNDRED[num]) if num <= 100
+    return (sign + under_hundred(num) if num <= 100
     counter = 0
     result = []
     while num != 0
@@ -21,12 +24,21 @@ module ToWords
   end
 
   def result_below_one_thousand(num, counter)
+    return under_hundred(num) if num == 100
+    hundred_in_word = " ratus "
     hundred, remaining = num.divmod(100)
-    return UNDER_HUNDRED[hundred] + " Hundred " + UNDER_HUNDRED[remaining]     if hundred != 0 && remaining != 0 && counter != 0
-    return UNDER_HUNDRED[hundred] + " Hundred and " + UNDER_HUNDRED[remaining] if hundred != 0 && remaining != 0
-    return UNDER_HUNDRED[remaining]                                            if hundred == 0 && remaining != 0
-    return UNDER_HUNDRED[hundred] + " Hundred "                                if hundred != 0 && remaining == 0
+    return under_hundred(hundred) + hundred_in_word + under_hundred(remaining)     if hundred != 0 && remaining != 0 && counter != 0
+    # return UNDER_HUNDRED[hundred] + " Hundred and " + UNDER_HUNDRED[remaining] if hundred != 0 && remaining != 0
+    return under_hundred(hundred) + hundred_in_word + under_hundred(remaining)     if hundred != 0 && remaining != 0
+    return under_hundred(remaining)                                                if hundred == 0 && remaining != 0
+    return under_hundred(hundred) + hundred_in_word                                if hundred != 0 && remaining == 0
     return ''
+  end
+
+  def under_hundred(num)
+    return UNDER_HUNDRED[num] if num == 100 || num <= 20
+    num, remaining = num.divmod(1000)
+    return UNDER_HUNDRED[num * 10] + UNDER_HUNDRED[remaining]
   end
 
   def check_sign(num)

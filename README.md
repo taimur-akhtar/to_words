@@ -21,7 +21,7 @@ e.g.
 
 Add this line to your application's Gemfile:
 
-    gem 'to_words', :git => 'git@github.com:mightiesthero/to_words.git'
+    gem 'to_words', :git => 'git://github.com/mightiesthero/to_words.git'
 
 And then execute:
 

@@ -1,14 +1,21 @@
 # ToWords
+This code forked from https://github.com/taimur-akhtar/to_words
 
-This Gem converts numbers into words in Indonesian.
+This Gem converts numbers into words in English or Indonesian.
 
 e.g.
 
-1.to_words    # satu ,
+1.to_words                # one ,
 
-100.to_words  # seratus ,
+1.to_words("id")          # satu ,
 
-101.to_words  # seratus satu
+100.to_words              # one hundred ,
+
+100.to_words("id")        # seratus ,
+
+101.to_words("id")        # one hundred and one
+
+101.to_words("id")        # seratus satu
 
 ## Installation
 
@@ -20,10 +27,3 @@ And then execute:
 
     $ bundle
 
-## Usage
-
-TODO: Write usage instructions here
-
-## Credits
-
-https://github.com/[my-github-username]/to_words/fork

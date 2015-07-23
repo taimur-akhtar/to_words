@@ -1,8 +1,40 @@
 require "to_words/version"
 
 module ToWords
+  UNDER_HUNDRED_EN =
+    {""=>"",
+     0=>"zero",
+     1=>"one",
+     2=>"two",
+     3=>"three",
+     4=>"four",
+     5=>"five",
+     6=>"six",
+     7=>"seven",
+     8=>"eight",
+     9=>"nine",
+     10=>"ten",
+     11=>"eleven",
+     12=>"twelve",
+     13=>"thirteen",
+     14=>"fourteen",
+     15=>"fifteen",
+     16=>"sixteen",
+     17=>"seventeen",
+     18=>"eighteen",
+     19=>"nineteen",
+     20=>"twenty",
+     30=>"thirty",
+     40=>"forty",
+     50=>"fifty",
+     60=>"sixty",
+     70=>"seventy",
+     80=>"eighty",
+     90=>"ninety",
+     100=>"one hundred",
+     1000=>"one thousand"}
 
-  UNDER_HUNDRED =
+  UNDER_HUNDRED_ID =
     {""=>"",
      0=>"nol",
      1=>"satu",
@@ -35,19 +67,27 @@ module ToWords
      100=>"seratus",
      1000=>"seribu"}
 
-  DIVISIONS = ["", "ribu", "juta", "miliar", "triliun"]
+  DIVISIONS_EN = ["", "thousand", "million", "billion", "trillion", "quadrillion", "quintrillion"]
+  DIVISIONS_ID = ["", "ribu", "juta", "biliun", "triliun", "kuadriliun", "kuantatiliun"]
 
-  def to_words
+  HUNDRED_IN_WORD_EN = " hundred "
+  HUNDRED_IN_WORD_ID = " ratus "
+
+  HUNDRED_IN_WORD_AND_EN = " hundred and "
+  HUNDRED_IN_WORD_AND_ID = " ratus "
+
+  def to_words(language = "en")
+    set_language(language)
+
     num = self.to_i
     num, sign = check_sign(num)
-    return (sign + UNDER_HUNDRED[num]) if num == 1000
-    return (sign + under_hundred(num)) if num <= 100
+    return (sign + under_hundred(num)) if (num <= 100 || num == 1000)
     counter = 0
     result = []
     while num != 0
       num, remaining = num.divmod(1000)
       temp_result = result_below_one_thousand(remaining, counter)
-      result << temp_result + " " + DIVISIONS[counter] + " " if temp_result != ''
+      result << temp_result + " " + @@divisions[counter] + " " if temp_result != ''
       counter += 1
     end
     return sign + result.reverse.join("").rstrip
@@ -56,22 +96,41 @@ module ToWords
   def result_below_one_thousand(num, counter)
     hundred, remaining = num.divmod(100)
     hundred_in_word = " "
-    hundred_in_word = " ratus " if hundred > 1
+    hundred_in_word_and = " "
+    if hundred > 1
+      hundred_in_word = @@hundred_in_word
+      hundred_in_word_and = @@hundred_in_word_and
+    end
     hundred = hundred * 100 if hundred == 1
 
-    return under_hundred(hundred) + hundred_in_word + under_hundred(remaining)     if hundred != 0 && remaining != 0 && counter != 0
-    # return UNDER_HUNDRED[hundred] + " Hundred and " + UNDER_HUNDRED[remaining] if hundred != 0 && remaining != 0
-    return under_hundred(hundred) + hundred_in_word + under_hundred(remaining)     if hundred != 0 && remaining != 0
-    return under_hundred(remaining)                                                if hundred == 0 && remaining != 0
-    return under_hundred(hundred) + hundred_in_word                                if hundred != 0 && remaining == 0
+    return under_hundred(hundred) + hundred_in_word + under_hundred(remaining)        if hundred != 0 && remaining != 0 && counter != 0
+    return under_hundred(hundred) + hundred_in_word_and + under_hundred(remaining)    if hundred != 0 && remaining != 0
+    return under_hundred(remaining)                                                   if hundred == 0 && remaining != 0
+    return under_hundred(hundred) + hundred_in_word                                   if hundred != 0 && remaining == 0
     return ''
   end
 
   def under_hundred(num)
-    return UNDER_HUNDRED[num] if num < 20
+    words = @@words
+    return words[num] if num < 20
     num, remaining = num.divmod(10)
-    return UNDER_HUNDRED[num * 10] if remaining == 0
-    return UNDER_HUNDRED[num * 10] + " " + UNDER_HUNDRED[remaining]
+    return words[num * 10] if remaining == 0
+    return words[num * 10] + " " + words[remaining]
+  end
+
+  def set_language(language)
+    if language == "en"
+      @@words = UNDER_HUNDRED_EN
+      @@divisions = DIVISIONS_EN
+      @@hundred_in_word = HUNDRED_IN_WORD_EN
+      @@hundred_in_word_and = HUNDRED_IN_WORD_AND_EN
+    end
+    if language == "id"
+      @@words = UNDER_HUNDRED_ID
+      @@divisions = DIVISIONS_ID
+      @@hundred_in_word = HUNDRED_IN_WORD_ID
+      @@hundred_in_word_and = HUNDRED_IN_WORD_AND_ID
+    end
   end
 
   def check_sign(num)

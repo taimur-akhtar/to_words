@@ -1,4 +1,4 @@
-Copyright (c) 2014 Taimur Akhtar
+Copyright (c) 2014 Bengsiswanto Hendrawan
 
 MIT License
 

@@ -52,7 +52,7 @@ module ToWords
       result << temp_result + " " + DIVISIONS[counter] + " " if temp_result != ''
       counter += 1
     end
-    return sign + result.reverse.join(", ").rstrip
+    return sign + result.reverse.join(" ").rstrip
   end
 
   def result_below_one_thousand(num, counter)

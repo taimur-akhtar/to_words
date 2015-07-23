@@ -70,8 +70,9 @@ module ToWords
   end
 
   def under_hundred(num)
-    return UNDER_HUNDRED[num] if num == 100 || num <= 20
+    return UNDER_HUNDRED[num] if num < 20
     num, remaining = num.divmod(10)
+    return UNDER_HUNDRED[num * 10] if remaining == 0
     return UNDER_HUNDRED[num * 10] + " " + UNDER_HUNDRED[remaining]
   end
 

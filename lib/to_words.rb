@@ -87,8 +87,8 @@ module ToWords
     while num != 0
       num, remaining = num.divmod(1000)
       temp_result = result_below_one_thousand(remaining, counter)
-      temp_result = under_hundred(1000) if counter == 1 && remaining == 1
       result << temp_result + " " + @@divisions[counter] + " " if temp_result != ''
+      result[result.length - 1] = under_hundred(1000) if counter == 1 && remaining == 1
       counter += 1
     end
     return sign + result.reverse.join("").rstrip

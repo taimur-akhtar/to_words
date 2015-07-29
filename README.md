@@ -4,11 +4,17 @@ This Gem converts numbers into words.
 
 e.g.
 
-1.to_words    # one , 
+1.to_words          # one ,
 
-100.to_words  # one hundred , 
+1.to_words("id")    # satu ,
 
-101.to_words  # one hundred and one
+100.to_words        # one hundred ,
+
+100.to_words("id")  # seratus ,
+
+101.to_words        # one hundred and one ,
+
+101.to_words("id")  # seratus satu
 
 ## Installation
 

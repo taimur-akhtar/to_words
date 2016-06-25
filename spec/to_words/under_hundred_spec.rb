@@ -10,7 +10,11 @@ RSpec.describe 'DIVISIONS' do
     expect(subject.keys.all? { |key| key.is_a? Fixnum }).to be true
   end
 
-  it 'has all keys to be integers' do
+  it 'has all values to be strings' do
     expect(subject.values.all? { |value| value.is_a? String }).to be true
+  end
+
+  it 'is expected to be frozen' do
+    expect(subject.frozen?).to be true
   end
 end

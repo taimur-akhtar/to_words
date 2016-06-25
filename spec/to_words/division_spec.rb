@@ -37,4 +37,8 @@ RSpec.describe 'DIVISIONS' do
   it 'has Quintrillion at index 6' do
     expect(subject[6]).to eq 'Quintrillion'
   end
+
+  it 'is expected to be frozen' do
+    expect(subject.frozen?).to be true
+  end
 end

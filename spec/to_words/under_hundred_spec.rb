@@ -1,5 +1,5 @@
 require_relative '../spec_helper'
-RSpec.describe 'DIVISIONS' do
+RSpec.describe 'UNDER_HUNDRED' do
   let(:subject) do
     ToWords::UnderHundred::UNDER_HUNDRED
   end

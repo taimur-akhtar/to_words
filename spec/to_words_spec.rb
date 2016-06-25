@@ -14,11 +14,11 @@ RSpec.describe 'to_word' do
     end
 
     it "raises error for non-numerical string '1d'" do
-      expect { '1d'.to_words }.to raise_error 'A number is expected'
+      expect { '1d'.to_words }.to raise_error 'A whole number is expected'
     end
 
     it "raises error for non-numerical string 'd1'" do
-      expect { 'd1'.to_words }.to raise_error 'A number is expected'
+      expect { 'd1'.to_words }.to raise_error 'A whole number is expected'
     end
 
     it 'it extends Fixnum methods' do

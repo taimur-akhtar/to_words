@@ -1,4 +1,5 @@
-require_relative './under_hundred.rb'
+# frozen_string_literal: true
+require_relative "./under_hundred.rb"
 module ToWords
   module Utils
     include UnderHundred
@@ -11,21 +12,22 @@ module ToWords
     end
 
     def higher_than_hundred(hundred, remaining, counter)
+      century = UNDER_HUNDRED[hundred]
       if remaining != 0
-        return UNDER_HUNDRED[hundred] + ' Hundred ' + UNDER_HUNDRED[remaining] if counter != 0
-        return UNDER_HUNDRED[hundred] + ' Hundred and ' + UNDER_HUNDRED[remaining]
+        return century + " Hundred " + UNDER_HUNDRED[remaining] if counter != 0
+        return century + " Hundred and " + UNDER_HUNDRED[remaining]
       end
-      return UNDER_HUNDRED[hundred] + ' Hundred ' if remaining == 0
+      return century + " Hundred " if remaining == 0
     end
 
     def check_sign(num)
-      num < 0 ? [num.abs, 'negative '] : [num, '']
+      num < 0 ? [num.abs, "negative "] : [num, ""]
     end
 
     def numerical?(num)
       Integer(num)
     rescue
-      raise 'A whole number is expected'
+      raise "A whole number is expected"
     end
   end
 end

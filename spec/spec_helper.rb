@@ -1,8 +1,9 @@
-require 'coveralls'
+# frozen_string_literal: true
+require "coveralls"
 Coveralls.wear!
-$LOAD_PATH.unshift File.expand_path('../../lib', __FILE__)
-require 'to_words'
-require 'pry'
+$LOAD_PATH.unshift File.expand_path("../../lib", __FILE__)
+require "to_words"
+require "pry"
 RSpec.configure do |config|
   config.expect_with :rspec do |expectations|
     expectations.include_chain_clauses_in_custom_matcher_descriptions = true

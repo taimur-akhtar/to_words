@@ -1,8 +1,9 @@
+# frozen_string_literal: true
 module ToWords
-  require 'to_words/version'
-  require_relative './to_words/under_hundred.rb'
-  require_relative './to_words/divisions.rb'
-  require_relative './to_words/utils.rb'
+  require "to_words/version"
+  require_relative "./to_words/under_hundred.rb"
+  require_relative "./to_words/divisions.rb"
+  require_relative "./to_words/utils.rb"
 
   include ToWords::UnderHundred
   include ToWords::Divisions
@@ -17,10 +18,10 @@ module ToWords
     while num != 0
       num, remaining = num.divmod(1000)
       temp_result = result_below_one_thousand(remaining, counter)
-      result << temp_result + ' ' + DIVISIONS[counter] + ' ' if temp_result
+      result << temp_result + " " + DIVISIONS[counter] + " " if temp_result
       counter += 1
     end
-    sign + result.reverse.join(', ').rstrip
+    sign + result.reverse.join(", ").rstrip
   end
 end
 

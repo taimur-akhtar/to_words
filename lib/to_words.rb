@@ -1,8 +1,8 @@
-require 'to_words/version'
-require 'to_words/under_hundred'
-require 'to_words/divisions'
-
 module ToWords
+  require 'to_words/version'
+  require_relative './to_words/under_hundred.rb'
+  require_relative './to_words/divisions.rb'
+
   include ToWords::UnderHundred
   include ToWords::Divisions
 

@@ -7,7 +7,7 @@ module ToWords
   include ToWords::Divisions
 
   def to_words
-    num = to_i
+    num = numerical?(self)
     num, sign = check_sign(num)
     return (sign + UNDER_HUNDRED[num]) if num <= 100
     counter = 0
@@ -31,10 +31,20 @@ module ToWords
   end
 
   def check_sign(num)
-    num < 0 ? [num.abs, 'negative '] : [num, '']
+    num < 0 ? [num.abs.to_i, 'negative '] : [num.to_i, '']
+  end
+
+  def numerical?(num)
+    Float(num)
+  rescue
+    raise 'A number is expected'
   end
 end
 
 class Fixnum
+  include ToWords
+end
+
+class String
   include ToWords
 end

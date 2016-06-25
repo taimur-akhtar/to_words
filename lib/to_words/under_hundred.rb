@@ -1,7 +1,6 @@
 module ToWords
   module UnderHundred
     UNDER_HUNDRED = {
-      '' => '',
       0 => 'zero',
       1 => 'one',
       2 => 'two',

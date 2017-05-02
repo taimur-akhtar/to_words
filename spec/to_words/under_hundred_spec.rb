@@ -8,7 +8,8 @@ RSpec.describe "UNDER_HUNDRED" do
   it { is_expected.to be_a Hash }
 
   it "has all keys to be integers" do
-    expect(subject.keys.all? { |key| key.is_a? Fixnum }).to be true
+    integer_class = 1.class # Fixnum before Ruby 2.4, Integer from Ruby 2.4
+    expect(subject.keys.all? { |key| key.is_a? integer_class }).to be true
   end
 
   it "has all values to be strings" do

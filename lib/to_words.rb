@@ -25,7 +25,8 @@ module ToWords
   end
 end
 
-class Fixnum
+INTEGER_KLASS = 1.class # Fixnum before Ruby 2.4, Integer from Ruby 2.4
+class INTEGER_KLASS
   include ToWords
 end
 

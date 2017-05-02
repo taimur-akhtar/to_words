@@ -22,7 +22,8 @@ RSpec.describe "to_word" do
       expect { "d1".to_words }.to raise_error "A whole number is expected"
     end
 
-    it "it extends Fixnum methods" do
+    it "it extends Fixnum / Integer methods" do
+       # Fixnum before Ruby 2.4, Integer from Ruby 2.4
       expect(1.methods).to include :to_words
     end
   end
